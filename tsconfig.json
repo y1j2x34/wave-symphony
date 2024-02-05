@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "rootDir": "./",
+        "baseUrl": ".",
+        "target": "ESNext",
+        "module": "ESNext",
+        "lib": ["ESNext", "DOM"],
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "isolatedModules": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["src", "tests", "dev", "vite.config.ts"]
+}
