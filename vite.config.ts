@@ -5,7 +5,7 @@ import solidPlugin from 'vite-plugin-solid';
 
 export default defineConfig({
     server: {
-        port: 3000,
+        port: 10086,
     },
     plugins: [solidPlugin({})],
     resolve: {

@@ -3,7 +3,7 @@
     "build": {
         "beforeBuildCommand": "npm build",
         "beforeDevCommand": "npm start",
-        "devPath": "http://localhost:3000",
+        "devPath": "http://localhost:10086",
         "distDir": "../dist",
         "withGlobalTauri": true
     },
@@ -60,7 +60,8 @@
                 "height": 600,
                 "resizable": true,
                 "title": "Wave Symphony",
-                "width": 800
+                "width": 800,
+                "decorations": false
             }
         ]
     }

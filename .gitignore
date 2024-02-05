@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 docs/
+vite.config.ts.timestamp-*.mjs
+temp
