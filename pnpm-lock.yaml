@@ -5,12 +5,18 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@solidjs/router':
+    specifier: ^0.13.1
+    version: 0.13.1(solid-js@1.8.12)
   '@tauri-apps/api':
     specifier: ^1.5.3
     version: 1.5.3
   jsdom:
     specifier: ^24.0.0
     version: 24.0.0
+  preline:
+    specifier: ^2.0.3
+    version: 2.0.3
   solid-js:
     specifier: ^1.8.12
     version: 1.8.12
@@ -27,7 +33,10 @@ devDependencies:
     version: 18.6.0(@types/node@20.11.10)(typescript@5.3.3)
   '@solidjs/testing-library':
     specifier: ^0.8.6
-    version: 0.8.6(@solidjs/router@0.11.3)(solid-js@1.8.12)
+    version: 0.8.6(@solidjs/router@0.13.1)(solid-js@1.8.12)
+  '@tailwindcss/forms':
+    specifier: ^0.5.7
+    version: 0.5.7(tailwindcss@3.4.1)
   '@tauri-apps/cli':
     specifier: ^1.5.9
     version: 1.5.9
@@ -1239,6 +1248,10 @@ packages:
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: true
 
+  /@popperjs/core@2.11.8:
+    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==, tarball: https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz}
+    dev: false
+
   /@rollup/rollup-android-arm-eabi@4.9.6:
     resolution: {integrity: sha512-MVNXSSYN6QXOulbHpLMKYi60ppyO13W9my1qogeiAqtjb2yR4LSmfU2+POvDkLzhjYLXz9Rf9+9a3zFHW1Lecg==, tarball: https://registry.npmjs.org/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.9.6.tgz}
     cpu: [arm]
@@ -1364,24 +1377,32 @@ packages:
       '@sinonjs/commons': 3.0.1
     dev: true
 
-  /@solidjs/router@0.11.3(solid-js@1.8.12):
-    resolution: {integrity: sha512-clSgyvzNnAw5iwnqHFNdzvvgt1eHbg81hu3A7H/qYz0+J5D0XIk7oqaOI7SRWCTnV8Rg9q4K83VV4foCOb+jcw==, tarball: https://registry.npmjs.org/@solidjs/router/-/router-0.11.3.tgz}
+  /@solidjs/router@0.13.1(solid-js@1.8.12):
+    resolution: {integrity: sha512-Rz5Lf0ssWMuN+Wm2GFO0vwZoO/KSwYFSuCUzWrRAvje5M0ZYZrMk5FZxuzdJT+zg8KuqWJQlRALks5E0r+FjAA==, tarball: https://registry.npmjs.org/@solidjs/router/-/router-0.13.1.tgz}
     peerDependencies:
       solid-js: ^1.8.6
     dependencies:
       solid-js: 1.8.12
-    dev: true
 
-  /@solidjs/testing-library@0.8.6(@solidjs/router@0.11.3)(solid-js@1.8.12):
+  /@solidjs/testing-library@0.8.6(@solidjs/router@0.13.1)(solid-js@1.8.12):
     resolution: {integrity: sha512-MnDGfUw38SjE+lmCDZ44HeZq5WbDU7s/BTa7uvqv55GKatddoWiJmHanUAbuEtmwMdEv+fFQQzftkqrFXEn1BQ==, tarball: https://registry.npmjs.org/@solidjs/testing-library/-/testing-library-0.8.6.tgz}
     engines: {node: '>= 14'}
     peerDependencies:
       '@solidjs/router': '>=0.9.0'
       solid-js: '>=1.0.0'
     dependencies:
-      '@solidjs/router': 0.11.3(solid-js@1.8.12)
+      '@solidjs/router': 0.13.1(solid-js@1.8.12)
       '@testing-library/dom': 9.3.4
       solid-js: 1.8.12
+    dev: true
+
+  /@tailwindcss/forms@0.5.7(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-QE7X69iQI+ZXwldE+rzasvbJiyV/ju1FGHH0Qn2W3FKbuYtqp8LKcy6iSw79fVUT5/Vvf+0XgLCeYVG+UV6hOw==, tarball: https://registry.npmjs.org/@tailwindcss/forms/-/forms-0.5.7.tgz}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
+    dependencies:
+      mini-svg-data-uri: 1.4.4
+      tailwindcss: 3.4.1(ts-node@10.9.2)
     dev: true
 
   /@tauri-apps/api@1.5.3:
@@ -4595,6 +4616,11 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /mini-svg-data-uri@1.4.4:
+    resolution: {integrity: sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==, tarball: https://registry.npmjs.org/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz}
+    hasBin: true
+    dev: true
+
   /minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
     dependencies:
@@ -5012,6 +5038,12 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
     dev: true
+
+  /preline@2.0.3:
+    resolution: {integrity: sha512-V/sLmRIHd23UCdvJNRKKszntgUqA0381erVzRpQ48NjjMOgI7DyFW4mr+lg387V0oeBc5Dx9Jxa5voppVoH9GA==, tarball: https://registry.npmjs.org/preline/-/preline-2.0.3.tgz}
+    dependencies:
+      '@popperjs/core': 2.11.8
+    dev: false
 
   /prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
