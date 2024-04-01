@@ -23,9 +23,7 @@
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "files": [
-        "dist"
-    ],
+    "files": ["dist"],
     "scripts": {
         "build": "vite build",
         "commit": "commit",
@@ -75,6 +73,8 @@
         "@tauri-apps/api": "^1.5.3",
         "jsdom": "^24.0.0",
         "preline": "^2.0.3",
-        "solid-js": "^1.8.12"
+        "solid-js": "^1.8.12",
+        "@vgerbot/solidium": "file:./solidium/packages/solidium",
+        "@vgerbot/solidium-http": "file:./solidium/packages/http"
     }
 }
