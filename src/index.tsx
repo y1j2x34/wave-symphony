@@ -6,6 +6,7 @@ import { App } from './App';
 import { Solidium } from '@vgerbot/solidium';
 import { HttpClient } from '@vgerbot/solidium-http';
 import { processRsAPIInstance } from './rs-api/RsAPI';
+import { PrelineService } from './services/PrelineService';
 
 const root = document.getElementById('root');
 
@@ -13,7 +14,7 @@ render(
     () => (
         <>
             <Solidium
-                autoRegisterClasses={[HttpClient.configure({})]}
+                autoRegisterClasses={[HttpClient.configure({}), PrelineService]}
                 init={app => {
                     app.registerAfterInstantiationProcessor(processRsAPIInstance);
                 }}
