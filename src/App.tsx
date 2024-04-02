@@ -10,7 +10,7 @@ declare global {
 
 export function App() {
     const api = useService(RsAPI);
-    return <div>
+    return <div class="container md:mx-auto">
         <div class="text-4xl text-green-700 text-center py-20">Hello world!</div>
         <button onClick={() => {
             api.greet({

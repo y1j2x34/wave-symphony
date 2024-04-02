@@ -1,17 +1,16 @@
 import { invoke } from '@tauri-apps/api';
 import { InvokeArgs } from '@tauri-apps/api/tauri';
+import { Newable } from '@vgerbot/ioc';
 
-export interface IRsAPI {
+interface IRsAPI {
     greet(params: { name: string }): Promise<string>;
 }
-export class RsAPI implements IRsAPI {
-    greet(params: { name: string }): Promise<string> {
-        throw new Error('Method not implemented.');
-    }
-}
+
+export const RsAPI = class {} as unknown as Newable<IRsAPI>;
+
 export function processRsAPIInstance<T>(instance: T): T {
     if (instance instanceof RsAPI) {
-        return new Proxy(instance, {
+        return new Proxy(instance as object, {
             get(target, p, receiver) {
                 if (typeof p === 'symbol') {
                     return Reflect.get(target, p, receiver);
@@ -20,7 +19,7 @@ export function processRsAPIInstance<T>(instance: T): T {
                     return invoke(p, args);
                 };
             },
-        });
+        }) as T;
     }
     return instance;
 }
