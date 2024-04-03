@@ -6,7 +6,7 @@ import { App } from './App';
 import { Solidium } from '@vgerbot/solidium';
 import { HttpClient } from '@vgerbot/solidium-http';
 import { processRsAPIInstance } from './rs-api/RsAPI';
-import { PrelineService } from './services/PrelineService';
+import { PrelineService } from './services/ui/PrelineService';
 
 const root = document.getElementById('root');
 

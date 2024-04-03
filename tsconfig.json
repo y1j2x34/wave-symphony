@@ -22,5 +22,6 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["src", "tests", "dev", "vite.config.ts"]
+    "include": ["src", "tests", "dev", "vite.config.ts", "node_modules/**/*.d.ts"],
+    "exclude": ["./solidium/packages"]
 }

@@ -23,7 +23,9 @@
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "files": ["dist"],
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "vite build",
         "commit": "commit",
@@ -69,12 +71,16 @@
     },
     "packageManager": "pnpm@8.14.3",
     "dependencies": {
+        "@solid-primitives/event-listener": "^2.3.3",
+        "@solid-primitives/scheduled": "^1.4.3",
         "@solidjs/router": "^0.13.1",
         "@tauri-apps/api": "^1.5.3",
+        "@vgerbot/ioc": "^1.2.0",
+        "@vgerbot/lazy": "^1.0.7",
+        "@vgerbot/solidium": "link:./solidium/packages/solidium",
+        "@vgerbot/solidium-http": "link:./solidium/packages/http",
         "jsdom": "^24.0.0",
         "preline": "^2.0.3",
-        "solid-js": "^1.8.12",
-        "@vgerbot/solidium": "link:./solidium/packages/solidium",
-        "@vgerbot/solidium-http": "link:./solidium/packages/http"
+        "solid-js": "^1.8.12"
     }
 }

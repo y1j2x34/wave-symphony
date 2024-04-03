@@ -5,12 +5,24 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@solid-primitives/event-listener':
+    specifier: ^2.3.3
+    version: 2.3.3(solid-js@1.8.12)
+  '@solid-primitives/scheduled':
+    specifier: ^1.4.3
+    version: 1.4.3(solid-js@1.8.12)
   '@solidjs/router':
     specifier: ^0.13.1
     version: 0.13.1(solid-js@1.8.12)
   '@tauri-apps/api':
     specifier: ^1.5.3
     version: 1.5.3
+  '@vgerbot/ioc':
+    specifier: ^1.2.0
+    version: 1.2.0
+  '@vgerbot/lazy':
+    specifier: ^1.0.7
+    version: 1.0.7
   '@vgerbot/solidium':
     specifier: link:./solidium/packages/solidium
     version: link:solidium/packages/solidium
@@ -1383,6 +1395,31 @@ packages:
       '@sinonjs/commons': 3.0.1
     dev: true
 
+  /@solid-primitives/event-listener@2.3.3(solid-js@1.8.12):
+    resolution: {integrity: sha512-DAJbl+F0wrFW2xmcV8dKMBhk9QLVLuBSW+TR4JmIfTaObxd13PuL7nqaXnaYKDWOYa6otB00qcCUIGbuIhSUgQ==, tarball: https://registry.npmjs.org/@solid-primitives/event-listener/-/event-listener-2.3.3.tgz}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      '@solid-primitives/utils': 6.2.3(solid-js@1.8.12)
+      solid-js: 1.8.12
+    dev: false
+
+  /@solid-primitives/scheduled@1.4.3(solid-js@1.8.12):
+    resolution: {integrity: sha512-HfWN5w7b7FEc6VPLBKnnE302h90jsLMuR28Fcf7neRGGf8jBj6wm6/UFQ00VlKexHFMR6KQ2u4VBh5a1ZcqM8g==, tarball: https://registry.npmjs.org/@solid-primitives/scheduled/-/scheduled-1.4.3.tgz}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      solid-js: 1.8.12
+    dev: false
+
+  /@solid-primitives/utils@6.2.3(solid-js@1.8.12):
+    resolution: {integrity: sha512-CqAwKb2T5Vi72+rhebSsqNZ9o67buYRdEJrIFzRXz3U59QqezuuxPsyzTSVCacwS5Pf109VRsgCJQoxKRoECZQ==, tarball: https://registry.npmjs.org/@solid-primitives/utils/-/utils-6.2.3.tgz}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      solid-js: 1.8.12
+    dev: false
+
   /@solidjs/router@0.13.1(solid-js@1.8.12):
     resolution: {integrity: sha512-Rz5Lf0ssWMuN+Wm2GFO0vwZoO/KSwYFSuCUzWrRAvje5M0ZYZrMk5FZxuzdJT+zg8KuqWJQlRALks5E0r+FjAA==, tarball: https://registry.npmjs.org/@solidjs/router/-/router-0.13.1.tgz}
     peerDependencies:
@@ -1816,6 +1853,19 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
+
+  /@vgerbot/ioc@1.2.0:
+    resolution: {integrity: sha512-Ts3QCPbRGUQ6qK8vTQlvXHyFQAA/u8aisGExKa2vHHDVKS4mlwTGCp2FZN39/sUxn1SmJwiAHdRkQOtWPE++iQ==, tarball: https://registry.npmjs.org/@vgerbot/ioc/-/ioc-1.2.0.tgz}
+    dependencies:
+      '@vgerbot/lazy': 1.0.7
+      reflect-metadata: 0.1.14
+    optionalDependencies:
+      minimist: 1.2.8
+    dev: false
+
+  /@vgerbot/lazy@1.0.7:
+    resolution: {integrity: sha512-Vz/ZTvd/5woP2bXRgK0CkYxy4L3SiNZDeFOC/G4aKEO6wGN3ZdexKwRE8woBik7f/oSVC9WCFpVvm7WV4wt1sQ==, tarball: https://registry.npmjs.org/@vgerbot/lazy/-/lazy-1.0.7.tgz}
+    dev: false
 
   /@vitest/expect@1.2.2:
     resolution: {integrity: sha512-3jpcdPAD7LwHUUiT2pZTj2U82I2Tcgg2oVPvKxhn6mDI2On6tfvPQTjAI4628GUGDZrCm4Zna9iQHm5cEexOAg==, tarball: https://registry.npmjs.org/@vitest/expect/-/expect-1.2.2.tgz}
@@ -4651,7 +4701,6 @@ packages:
 
   /minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
-    dev: true
 
   /minipass@7.0.4:
     resolution: {integrity: sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==, tarball: https://registry.npmjs.org/minipass/-/minipass-7.0.4.tgz}
@@ -5174,6 +5223,10 @@ packages:
       indent-string: 4.0.0
       strip-indent: 3.0.0
     dev: true
+
+  /reflect-metadata@0.1.14:
+    resolution: {integrity: sha512-ZhYeb6nRaXCfhnndflDK8qI6ZQ/YcWZCISRAWICW9XYqMUwjZM9Z0DveWX/ABN01oxSHwVxKQmxeYZSsm0jh5A==, tarball: https://registry.npmjs.org/reflect-metadata/-/reflect-metadata-0.1.14.tgz}
+    dev: false
 
   /regenerator-runtime@0.14.1:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
