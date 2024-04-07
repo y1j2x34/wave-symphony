@@ -1,6 +1,6 @@
 export function NextButton() {
     return (
-        <button class="hidden sm:block lg:hidden xl:block" aria-label="Next">
+        <button class="" aria-label="Next">
             <svg width="24" height="24" fill="none">
                 <path
                     d="M14 12 6 6v12l8-6Z"

@@ -9,7 +9,9 @@ export class PlayerService {
     progress: number = 0;
     @Signal
     status: PlayerStatus = PlayerStatus.STOPPED;
-
+    constructor() {
+        console.log(this);
+    }
     get isPaused() {
         return this.status === PlayerStatus.PAUSED;
     }
@@ -31,12 +33,14 @@ export class PlayerService {
         if (this.status === PlayerStatus.PAUSED) {
             return;
         }
+        this.status = PlayerStatus.PAUSED;
         //
     }
 
     play() {
-        if (!this.isPaused) {
+        if (this.isPlaying) {
             return;
         }
+        this.status = PlayerStatus.PLAYING;
     }
 }
