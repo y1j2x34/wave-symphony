@@ -4,6 +4,7 @@ import { RsAPI } from './rs-api/RsAPI';
 import { Slider } from './components/slider/Slider';
 import { createSignal } from 'solid-js';
 import { Player } from './components/player/Player';
+import { DarkModeSwitcher } from './components/dark-mode/DarkModeSwitcher';
 
 declare global {
     interface Window {
@@ -21,6 +22,7 @@ export function App() {
                     class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between"
                     aria-label="Global"
                 ></nav>
+                <DarkModeSwitcher></DarkModeSwitcher>
             </header>
             <main class="flex">
                 {/* player container */}
