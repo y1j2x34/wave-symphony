@@ -3,8 +3,9 @@ import { useService } from '@vgerbot/solidium';
 import { RsAPI } from './rs-api/RsAPI';
 import { Slider } from './components/slider/Slider';
 import { createSignal } from 'solid-js';
-import { Player } from './components/player/Player';
+import { PlayerControl } from './components/player/PlayerControl';
 import { DarkModeSwitcher } from './components/dark-mode/DarkModeSwitcher';
+import { PlayingMusicInfo } from './components/player/PlayingMusicInfo';
 
 declare global {
     interface Window {
@@ -24,32 +25,16 @@ export function App() {
                 ></nav>
                 <DarkModeSwitcher></DarkModeSwitcher>
             </header>
-            <main class="flex">
+            <main class="flex gap-2">
                 {/* player container */}
-                <section class="">
-                    <Player></Player>
+                <section class="w-[25rem] m-5">
+                    <PlayingMusicInfo></PlayingMusicInfo>
+                    <PlayerControl></PlayerControl>
                 </section>
                 {/* main container */}
                 <section class="flex-1"></section>
-                <Slider
-                    min={0}
-                    max={500}
-                    value={progress()}
-                    label="Progress"
-                    onChange={value => {
-                        setProgress(value);
-                    }}
-                    wheelOffset={e => {
-                        const unit = e.deltaY < 0 ? -1 : 1;
-                        if (e.shiftKey) {
-                            return 100 * unit;
-                        }
-                        return 10 * unit;
-                    }}
-                    helperText1={progress() + ''}
-                    helperText2={500 + ''}
-                ></Slider>
             </main>
+            <footer></footer>
         </div>
     );
 }
