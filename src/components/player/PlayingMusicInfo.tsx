@@ -24,13 +24,32 @@ export function PlayingMusicInfo() {
                 <div class="text-cyan-500 transition-all duration-500 dark:text-cyan-400 text-sm leading-6">
                     <a href="#" class="hover:cursor-pointer">
                         张国荣
-                    </a>{' '}
-                    -{' '}
+                    </a>
+                    -
                     <a class="text-cyan-600" href="#">
                         LESLIE
                     </a>
                 </div>
             </div>
+            <Slider
+                min={0}
+                max={500}
+                value={progress()}
+                label="Progress"
+                onChange={value => {
+                    setProgress(value);
+                }}
+                wheelOffset={e => {
+                    const unit = e.deltaY < 0 ? -1 : 1;
+                    if (e.shiftKey) {
+                        return 100 * unit;
+                    }
+                    return 10 * unit;
+                }}
+                helperText1={progress() + ''}
+                helperText2={500 + ''}
+            ></Slider>
+
             <Slider
                 min={0}
                 max={500}
