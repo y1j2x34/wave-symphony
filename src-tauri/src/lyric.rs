@@ -1,6 +1,8 @@
+use core::fmt;
+
 use serde;
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, Debug)]
 pub enum LyricRole {
     /*
      * 女声
@@ -11,6 +13,7 @@ pub enum LyricRole {
 }
 
 impl LyricRole {
+    #[warn(dead_code)]
     fn from_str(s: &'static str) -> LyricRole {
         match s {
             "M" => LyricRole::Male,
@@ -28,13 +31,19 @@ impl LyricRole {
     }
 }
 
-#[derive(serde::Serialize)]
+impl fmt::Display for LyricRole {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.to_str())
+    }
+}
+
+#[derive(serde::Serialize, Debug)]
 pub struct Lyric {
     pub metadata: LyricMetadata,
     pub subtitles: Vec<LyricSubtitle>,
 }
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, Debug)]
 pub struct LyricMetadata {
     pub al: Option<String>,
     pub ar: Option<String>,
@@ -46,10 +55,49 @@ pub struct LyricMetadata {
     pub ve: Option<String>,
 }
 
-#[derive(serde::Serialize)]
+#[derive(serde::Serialize, Debug)]
 pub struct LyricSubtitle {
     pub time_str: String,
     pub time: usize,
     pub text: String,
     pub role: Option<LyricRole>,
+}
+
+impl fmt::Display for Lyric {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "lyric:
+                metadata:
+                    {}
+                subtitles: 
+                    {:?}
+        ",
+            self.metadata, self.subtitles
+        )
+    }
+}
+impl fmt::Display for LyricMetadata {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "
+        al: {:?},
+        ar: {:?},
+        au: {:?},
+        by: {:?},
+        offset: {:?},
+        re: {:?},
+        ti: {:?},
+        ve: {:?},
+        ",
+            self.al, self.ar, self.au, self.by, self.offset, self.re, self.ti, self.ve,
+        )
+    }
+}
+
+impl fmt::Display for LyricSubtitle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "[{}] {:?} {}", self.time_str, self.role, self.text)
+    }
 }

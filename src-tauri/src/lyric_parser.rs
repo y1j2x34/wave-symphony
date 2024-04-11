@@ -1,7 +1,7 @@
 use crate::lyric::{self, LyricRole};
 use std::collections::HashMap;
 use std::fmt;
-#[derive(PartialEq, Eq, Hash)]
+#[derive(PartialEq, Eq, Hash, Debug)]
 enum TagType {
     Time,
     Al,
@@ -56,7 +56,14 @@ struct SubtitleError(String);
 pub fn lyric_parser(text: &str) -> lyric::Lyric {
     let mut metadata_map: HashMap<TagType, String> = HashMap::new();
     let mut subtitles: Vec<lyric::LyricSubtitle> = Vec::new();
-    text.split(r"[\r\n]").for_each(|line| {
+    let lines = text.lines();
+    println!("lines: {:?}", lines);
+    lines.for_each(|line| {
+        let line = line.trim();
+        if line.len() == 0 {
+            return;
+        }
+
         let bracket_end_index_option = line.find("]");
 
         if let Some(end_index) = bracket_end_index_option {
@@ -67,24 +74,22 @@ pub fn lyric_parser(text: &str) -> lyric::Lyric {
                 match parse_result {
                     Ok((t, v)) => match t {
                         TagType::Time => {
-                            let pieces = v.split(r"[:.]").collect::<Vec<&str>>();
-                            if pieces.len() != 3 {
-                                println!("Invalid subtitle time: {}", line)
-                            }
-                            let mm = pieces[0].parse::<usize>().unwrap();
-                            let ss = pieces[1].parse::<usize>().unwrap();
-                            let xx = pieces[2].parse::<usize>().unwrap();
+                            let [mm, ss, xx] = parse_time(v.as_str());
                             let milliseconds = mm * 60 * 1000 + ss * 1000 + xx * 100;
-                            let content = &line[end_index..];
+                            let mut content = &line[end_index + 1..];
                             let mut role = None;
 
                             if content.find("M:") != None {
                                 role = Some(LyricRole::Male);
+                                content = &content[2..];
                             } else if content.find("F:") != None {
-                                role = Some(LyricRole::Female)
+                                role = Some(LyricRole::Female);
+                                content = &content[2..];
                             } else if content.find("D:") != None {
-                                role = Some(LyricRole::Duet)
+                                role = Some(LyricRole::Duet);
+                                content = &content[2..];
                             }
+                            content = content.trim();
 
                             subtitles.push(lyric::LyricSubtitle {
                                 time_str: String::from(tag),
@@ -97,8 +102,7 @@ pub fn lyric_parser(text: &str) -> lyric::Lyric {
                             println!("Unknown type tag: {}, line: {}", tag, line);
                         }
                         _ => {
-                            let value = t.to_string().unwrap();
-                            metadata_map.insert(t, value);
+                            metadata_map.insert(t, v);
                         }
                     },
                     Err(SubtitleError(msg)) => {
@@ -121,7 +125,10 @@ pub fn lyric_parser(text: &str) -> lyric::Lyric {
     let ti = metadata_map.get(&TagType::Ti);
     let ve = metadata_map.get(&TagType::Ve);
     let offset_num = match offset {
-        Some(s) => Some(s.parse::<u32>().unwrap()),
+        Some(s) => {
+            println!("offset value: {}", s);
+            Some(s.parse::<u32>().unwrap())
+        }
         None => None,
     };
     lyric::Lyric {
@@ -153,17 +160,40 @@ impl fmt::Display for SubtitleError {
 }
 
 fn parse_tag<'a>(tag: &'a str) -> Result<(TagType, String), SubtitleError> {
-    let pieces = tag.split(":").collect::<Vec<&str>>();
-    if pieces.len() != 2 {
-        let msg = format!("Incorrect tag format, missing semicolon: {}", tag);
-        return Err(SubtitleError(msg));
-    }
-    let type_str = pieces[0];
+    let colon_index = tag
+        .find(":")
+        .expect(format!("Incorrect tag format, missing semicolon: {}", tag).as_str());
+
+    let type_str = &tag[..colon_index];
     let ttype = TagType::from_str(type_str);
     if ttype == TagType::Unknown {
         let msg = format!("Unknown tag type: {}", type_str);
         return Err(SubtitleError(msg));
     }
-    let value = pieces[1];
+    let value = &tag[colon_index + 1..];
     return Ok((ttype, String::from(value)));
+}
+
+fn parse_time(time: &str) -> [usize; 3] {
+    let mut collect_num_chars = String::new();
+    let mut times = [0, 0, 0];
+    time.chars().for_each(|chr| {
+        if chr == ':' {
+            times[0] = collect_num_chars
+                .parse::<usize>()
+                .expect("Invalid mm number");
+            collect_num_chars = String::new();
+        } else if chr == '.' {
+            times[1] = collect_num_chars
+                .parse::<usize>()
+                .expect("Invalid ss number");
+            collect_num_chars = String::new();
+        } else {
+            collect_num_chars.push(chr);
+        }
+    });
+    times[2] = collect_num_chars
+        .parse::<usize>()
+        .expect("Invalid xx number");
+    return times;
 }
