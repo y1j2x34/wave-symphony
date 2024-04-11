@@ -2,15 +2,15 @@ export interface LyricMetadata {
     /**
      * 专辑名：al
      */
-    albumName?: string;
+    al?: string;
     /**
      * 歌手名: ar
      */
-    artistName?: string;
+    ar?: string;
     /**
      * 歌词作者:au
      */
-    artistAuthor?: string;
+    au?: string;
     /**
      * 歌词文件作者: by
      */
@@ -26,9 +26,9 @@ export interface LyricMetadata {
     /**
      * 歌曲（歌词）标题: ti
      */
-    title?: string;
+    ti?: string;
     /**
      * 程序版本: ve
      */
-    vesion?: string;
+    ve?: string;
 }

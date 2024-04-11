@@ -17,13 +17,14 @@ export function Slider(props: ProgressProps) {
                     offset = wheelOffset(e);
                 } else if (typeof wheelOffset === 'number') {
                     const unit = e.deltaY < 0 ? -1 : 1;
-                    offset = Math.abs(wheelOffset) * unit;
+                    offset = Math.abs(wheelOffset) * unit * (e.shiftKey ? 10 : 1);
                 } else {
                     offset = e.deltaY;
                 }
                 const newProgressBarWidth = model.progressBarElement.offsetWidth + offset;
                 model.updateByPos(newProgressBarWidth);
                 props.onChange(model.value, 'wheel');
+                e.preventDefault();
             }}
         >
             <WindowEventListener

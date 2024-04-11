@@ -19,8 +19,8 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-fn parse_lyric(s: &str) -> lyric::Lyric {
-    lyric_parser(s)
+fn parse_lyric(lyric: &str) -> lyric::Lyric {
+    lyric_parser(lyric)
 }
 
 #[cfg(test)]
