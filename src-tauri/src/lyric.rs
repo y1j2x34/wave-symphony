@@ -1,35 +1,37 @@
 use serde;
 
-pub enum LyricSex {
+#[derive(serde::Serialize)]
+pub enum LyricRole {
     /*
-    * 女声
-    */
+     * 女声
+     */
     Male,
     Female,
-    Duet
+    Duet,
 }
 
-impl LyricSex {
-    fn from_str(s: &'static str) -> LyricSex {
+impl LyricRole {
+    fn from_str(s: &'static str) -> LyricRole {
         match s {
-            "M" => LyricSex::Male,
-            "F" => LyricSex::Female,
-            "Duet" => LyricSex::Duet,
-            _ => panic!("Unknown sex: {}", s),
+            "M" => LyricRole::Male,
+            "F" => LyricRole::Female,
+            "Duet" => LyricRole::Duet,
+            _ => panic!("Unknown role: {}", s),
         }
     }
     fn to_str(&self) -> &'static str {
         match self {
-            LyricSex::Male => "M",
-            LyricSex::Female => "F",
-            LyricSex::Duet => "D",
+            LyricRole::Male => "M",
+            LyricRole::Female => "F",
+            LyricRole::Duet => "D",
         }
     }
 }
 
 #[derive(serde::Serialize)]
 pub struct Lyric {
-    metadata: LyricMetadata,
+    pub metadata: LyricMetadata,
+    pub subtitles: Vec<LyricSubtitle>,
 }
 
 #[derive(serde::Serialize)]
@@ -44,8 +46,10 @@ pub struct LyricMetadata {
     pub ve: Option<String>,
 }
 
+#[derive(serde::Serialize)]
 pub struct LyricSubtitle {
-    time: String,
-    text: String,
-    sex: 
+    pub time_str: String,
+    pub time: usize,
+    pub text: String,
+    pub role: Option<LyricRole>,
 }
