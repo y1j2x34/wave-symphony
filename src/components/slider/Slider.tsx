@@ -50,6 +50,7 @@ export function Slider(props: ProgressProps) {
                         const left = model.progressBarElement.getBoundingClientRect().left;
                         const progressBarWidth = e.clientX - left;
                         model.updateByPos(progressBarWidth);
+                        props.onChange(model.value, 'click');
                     }}
                 >
                     <div
