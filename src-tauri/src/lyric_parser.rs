@@ -15,6 +15,12 @@ enum TagType {
     Unknown,
 }
 
+enum ParsedSubtitleLine {
+    Subtitle(lyric::LyricSubtitle),
+    Config(TagType, String),
+    Error,
+}
+
 impl TagType {
     fn from_str(value: &str) -> Self {
         match value {
@@ -58,62 +64,32 @@ pub fn lyric_parser(text: &str) -> lyric::Lyric {
     let mut subtitles: Vec<lyric::LyricSubtitle> = Vec::new();
     let lines = text.lines();
     println!("lines: {:?}", lines);
+    let mut line_number = 0;
     lines.for_each(|line| {
+        line_number = line_number + 1;
         let line = line.trim();
         if line.len() == 0 {
             return;
         }
-
-        let bracket_end_index_option = line.find("]");
-
-        if let Some(end_index) = bracket_end_index_option {
-            let bracket_start_index_option = line.find("[");
-            if let Some(start_index) = bracket_start_index_option {
-                let tag = &line[start_index + 1..end_index];
-                let parse_result = parse_tag(tag);
-                match parse_result {
-                    Ok((t, v)) => match t {
-                        TagType::Time => {
-                            let [mm, ss, xx] = parse_time(v.as_str());
-                            let milliseconds = mm * 60 * 1000 + ss * 1000 + xx * 100;
-                            let mut content = &line[end_index + 1..];
-                            let mut role = None;
-
-                            if content.find("M:") != None {
-                                role = Some(LyricRole::Male);
-                                content = &content[2..];
-                            } else if content.find("F:") != None {
-                                role = Some(LyricRole::Female);
-                                content = &content[2..];
-                            } else if content.find("D:") != None {
-                                role = Some(LyricRole::Duet);
-                                content = &content[2..];
-                            }
-                            content = content.trim();
-
-                            subtitles.push(lyric::LyricSubtitle {
-                                time_str: String::from(tag),
-                                time: milliseconds,
-                                text: String::from(content),
-                                role: role,
-                            })
-                        }
-                        TagType::Unknown => {
-                            println!("Unknown type tag: {}, line: {}", tag, line);
-                        }
-                        _ => {
-                            metadata_map.insert(t, v);
-                        }
-                    },
-                    Err(SubtitleError(msg)) => {
-                        println!("{}", msg)
-                    }
+        let result = parse_line(line);
+        if let Some(parsed_subtitle) = result {
+            match parsed_subtitle {
+                ParsedSubtitleLine::Subtitle(subtitle) => subtitles.push(subtitle),
+                ParsedSubtitleLine::Config(t, v) => {
+                    metadata_map.insert(t, v);
                 }
-            } else {
-                println!("Incorrect line: {}", line);
+                ParsedSubtitleLine::Error => {
+                    println!(
+                        "cannot parse this line({:?}) of the lyric file: {:?}",
+                        line_number, line
+                    )
+                }
             }
         } else {
-            println!("Incorrect line: {}", line);
+            println!(
+                "cannot parse this line({:?}) of the lyric file: {:?}",
+                line_number, line
+            )
         }
     });
     let al = metadata_map.get(&TagType::Al);
@@ -144,6 +120,43 @@ pub fn lyric_parser(text: &str) -> lyric::Lyric {
         },
         subtitles: subtitles,
     }
+}
+
+fn parse_line(line: &str) -> Option<ParsedSubtitleLine> {
+    let end_index = line.find("]")?;
+    let start_index = line.find("[")?;
+    let tag = &line[start_index + 1..end_index];
+    let (t, v) = parse_tag(tag).ok()?;
+
+    return match t {
+        TagType::Time => {
+            let [mm, ss, xx] = parse_time(v.as_str());
+            let milliseconds = mm * 60 * 1000 + ss * 1000 + xx * 100;
+            let mut content = &line[end_index + 1..];
+            let mut role = None;
+
+            if content.find("M:") != None {
+                role = Some(LyricRole::Male);
+                content = &content[2..];
+            } else if content.find("F:") != None {
+                role = Some(LyricRole::Female);
+                content = &content[2..];
+            } else if content.find("D:") != None {
+                role = Some(LyricRole::Duet);
+                content = &content[2..];
+            }
+            content = content.trim();
+
+            Some(ParsedSubtitleLine::Subtitle(lyric::LyricSubtitle {
+                time_str: String::from(tag),
+                time: milliseconds,
+                text: String::from(content),
+                role: role,
+            }))
+        }
+        TagType::Unknown => Some(ParsedSubtitleLine::Error),
+        _ => Some(ParsedSubtitleLine::Config(t, v)),
+    };
 }
 
 fn deref_opt_ref_string(value: Option<&String>) -> Option<String> {
