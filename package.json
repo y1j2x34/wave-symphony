@@ -69,7 +69,6 @@
         "vitest": "^1.2.2",
         "whatwg-fetch": "^3.6.20"
     },
-    "packageManager": "pnpm@8.14.3",
     "dependencies": {
         "@solid-primitives/event-listener": "^2.3.3",
         "@solid-primitives/scheduled": "^1.4.3",
