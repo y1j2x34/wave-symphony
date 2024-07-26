@@ -1,4 +1,4 @@
 [submodule "solidium"]
 	path = solidium
 	url = git@github.com:vgerbot-libraries/solidium.git
-	branch = feature/storage
+	branch = feature/serialize
